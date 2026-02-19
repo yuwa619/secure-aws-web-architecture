@@ -1,0 +1,37 @@
+# about-me.yml
+---
+- name: Configure NGINX and deploy HTML on private web servers
+  hosts: webservers
+  become: true
+  gather_facts: true
+
+  vars:
+    nginx_web_root: /usr/share/nginx/html
+    page_dest: "{{ nginx_web_root }}/index.html"
+
+  tasks:
+    - name: Install NGINX (Amazon Linux)
+      ansible.builtin.yum:
+        name: nginx
+        state: present
+
+    - name: Enable and start NGINX
+      ansible.builtin.systemd:
+        name: nginx
+        enabled: true
+        state: started
+
+    - name: Deploy index.html from template (includes hostname + private IP)
+      ansible.builtin.template:
+        src: index.html.j2
+        dest: "{{ page_dest }}"
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart NGINX
+
+  handlers:
+    - name: Restart NGINX
+      ansible.builtin.systemd:
+        name: nginx
+        state: restarted

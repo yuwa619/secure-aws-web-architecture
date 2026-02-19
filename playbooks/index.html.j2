@@ -1,0 +1,41 @@
+<!-- templates/index.html.j2 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Martins Obaseki – Cloud Engineering Project</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; background-color:#f4f6f8; margin:0; padding:0; }
+        .container { max-width:800px; margin:60px auto; background:#fff; padding:40px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color:#1f2933; }
+        p { color:#4a5568; line-height:1.6; }
+        .info { margin-top:20px; padding:15px; background:#edf2f7; border-left:4px solid #3182ce; }
+        .label { font-weight:bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Martins Obaseki</h1>
+
+        <p>
+            Welcome to my cloud engineering project deployed on AWS.
+            This web page is automatically configured using Ansible and served
+            from a private EC2 instance behind an Application Load Balancer.
+        </p>
+
+        <div class="info">
+            <p><span class="label">Hostname:</span> {{ ansible_hostname }}</p>
+            <p><span class="label">Private IP Address:</span> {{ ansible_default_ipv4.address }}</p>
+        </div>
+
+        <h2>About Me</h2>
+        <p>
+            I am a cloud and DevOps engineer in training with hands-on experience
+            deploying secure, highly available infrastructure on AWS.
+            I focus on infrastructure security, automation with Ansible,
+            and best practices such as using bastion hosts, private subnets,
+            and load balancers to protect backend systems.
+        </p>
+    </div>
+</body>
+</html>
